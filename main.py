@@ -38,10 +38,10 @@ print(f'Price change: {symbol}{round(percent_price, 2)}%')
 data = ns.create_news()
 filtered = ns.filter_news(data)
 saved = ns.save_news(filtered)
-print(f'Atleast one news? {saved}\n#News:{len(filtered)}')
+print(f'Atleast one news? {saved}Total News:{ns.count_news}')
 
 
-if abs(percent_price) >= 5 and saved:
+if abs(percent_price) >= 5:
     client = Client(os.getenv('TWILIO_ACCOUNT_SID'), os.getenv('TWILIO_AUTH_TOKEN'))
 
     for art in filtered:
@@ -58,12 +58,16 @@ if abs(percent_price) >= 5 and saved:
             headers=bitly_header,
             json=bitly_par
         )
+        
+        if short_url.status_code not in (201,200):
+            short_url = None
 
         message = client.messages.create(
-            body=f'''
-            {SELECTED_TICKER[ticker]}: {symbol}{round(percent_price, 2)}
-            {art['title']}
-            {short_url.json()["link"]}''',
+            body=(
+                f"{SELECTED_TICKER[ticker]}: {symbol}{round(percent_price, 2)}%\n"
+                f"{art['title']}\n"
+                f"{short_url.json()['link'] if short_url else ''}"
+            ),
             from_=os.getenv('TWILIO_TRIAL_NUMBER'),
             to=os.getenv('TEST_NUMBER')
         )

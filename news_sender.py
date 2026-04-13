@@ -45,6 +45,7 @@ class NewsSender:
                     filtered_list.append(art)
                     break
         # print(len(filtered_list))
+        self.count_news = len(filtered_list)
         return filtered_list[:3]
 
     def save_news(self, articles_list):
