@@ -47,8 +47,8 @@ class Yfinance_Client:
         
         self.positive_delta = False
         
-        self.today_price = self.df["Low"].iloc[-1]
-        self.yesterday_price = self.df["Low"].iloc[-2]
+        self.today_price = self.df["Close"].iloc[-1]
+        self.yesterday_price = self.df["Close"].iloc[-2]
         if self.yesterday_price == 0:
             raise RuntimeError("Invalid previous price (0)")
         
