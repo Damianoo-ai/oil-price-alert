@@ -2,21 +2,37 @@ from twilio.rest import Client
 from twilio.base.exceptions import TwilioRestException
 import os
 from api.bitly_client import shorten_url
-
-
+from news_client import PRICE_MOVEMENT_KEYWORD
+#Max lenght of the sms message(Impose by Twilio)
+MAX_LENGHT_SMS = 160
 
 def build_body_sms(article, symbol, asset_name, percent_chg, short_url)->str:
     
-    title = article.get('title')
+    title = article.get('title') or 'Untitled news'    
+    new_title = title
+    
+    fixed_test = (f"{asset_name}: {symbol}{round(percent_chg, 2)}%\n\n{short_url or ''}")
+    
+    remaining = MAX_LENGHT_SMS - len(fixed_test) 
+    if (remaining < 0):
         
-    if not title:
-            title = 'Untitled news'
+        if(abs(remaining)>len(title)):
+            keyword_news = ''
+            word_in_title = [w.lower() for w in title.split()]
+            for k in PRICE_MOVEMENT_KEYWORD:
+                if k in word_in_title:
+                    keyword_news = k
+                    break
+                
+            new_title = f'{keyword_news.title()} on the market' if keyword_news else 'Market news'
+        else:
+            new_len = max(0, remaining - 3)
+            new_title = title[:new_len] + '...'
             
-    return (
-        f"{asset_name}: {symbol}{round(percent_chg, 2)}%\n"
-        f"{title}\n"
-        f"{short_url or ''}"
-    )
+    final_text = (f"{asset_name}: {symbol}{round(percent_chg, 2)}%\n{new_title}\n{short_url or ''}")
+
+    return final_text
+    
             
 def send_sms(news:list[dict],symbol, asset_name, percent_chg):
     
