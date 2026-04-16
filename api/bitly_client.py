@@ -24,6 +24,7 @@ def shorten_url(link):
             json=payload,
             timeout=5
         )
+        
     except requests.exceptions.Timeout as e:
         print(f'BITLY Timeout overcomed')
     except requests.exceptions.ConnectionError as e:
