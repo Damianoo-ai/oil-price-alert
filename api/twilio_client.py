@@ -2,7 +2,7 @@ from twilio.rest import Client
 from twilio.base.exceptions import TwilioRestException
 import os
 from api.bitly_client import shorten_url
-from news_client import PRICE_MOVEMENT_KEYWORD
+from api.news_client import PRICE_MOVEMENT_KEYWORD
 #Max lenght of the sms message(Impose by Twilio)
 MAX_LENGHT_SMS = 160
 
