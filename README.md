@@ -1,29 +1,28 @@
 # 📈 Oil Price Alert System
 
-This project monitors crude oil prices and sends an SMS alert when the price changes by more than a defined threshold (e.g. ±5%).
+This project monitors crude oil prices and sends SMS alerts when significant price movements occur.
 
-When triggered, it:
-- fetches recent news about oil markets
-- filters relevant articles
-- sends SMS notifications using Twilio
+When a threshold is reached, it:
+- retrieves recent financial news related to oil markets  
+- filters the most relevant articles  
+- sends SMS notifications via Twilio  
 
 ---
 
 ## ⚙️ Requirements
 
-You need API keys for:
+The project uses external APIs. You need API keys for:
 
 - NewsAPI
 - Twilio
 
-Yahoo Finance data is retrieved using `yfinance` (no API key required).
+Price data is retrieved using `yfinance` (no API key required).
 
 ---
 
 ## 🔐 Environment variables
 
 Create a `.env` file based on `.env.example`:
-
 NEWS_API_KEY=
 BITLY_TOKEN=
 TWILIO_ACCOUNT_SID=
