@@ -15,6 +15,7 @@ The project uses external APIs. You need API keys for:
 
 - NewsAPI
 - Twilio
+- Bitly
 
 Price data is retrieved using `yfinance` (no API key required).
 
@@ -23,6 +24,7 @@ Price data is retrieved using `yfinance` (no API key required).
 ## 🔐 Environment variables
 
 Create a `.env` file based on `.env.example`:
+
 NEWS_API_KEY=
 BITLY_TOKEN=
 TWILIO_ACCOUNT_SID=
