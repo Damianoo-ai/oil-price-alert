@@ -2,7 +2,7 @@ name: Daily Oil Alert
 
 on:
   schedule:
-    - cron: "0 12 * * *"  # UTC → 14:00 Italia (circa)
+    - cron: "0 12 * * 1-5"  # Lun-Ven, 12:00 UTC
   workflow_dispatch:
 
 jobs:
